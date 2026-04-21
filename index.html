@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "¿Cómo ayuda la IA en el entrenamiento?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Nuestros widgets proporcionan feedback en tiempo real sobre tono, empatía y claridad, permitiendo a los médicos practicar escenarios complejos en un entorno seguro."
+        }
+      }]
+    }
+    </script>
+    
+
+<!-- SEO Meta Tags -->
+<title>Transforming Medical Empathy Through AI Simulations</title>
+<meta name="description" content="Help your medical team navigate hard conversations with compassion. Our AI bots provide realistic practice for delivering serious diagnoses and bad news." />
+<meta name="keywords" content="AI medical communication training" />
+<meta property="og:title" content="Transforming Medical Empathy Through AI Simulations" />
+<meta property="og:description" content="Help your medical team navigate hard conversations with compassion. Our AI bots provide realistic practice for delivering serious diagnoses and bad news." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Transforming Medical Empathy Through AI Simulations" />
+<meta name="twitter:description" content="Help your medical team navigate hard conversations with compassion. Our AI bots provide realistic practice for delivering serious diagnoses and bad news." />
+<!-- End SEO Meta Tags -->
+
+<script data-field-replace>
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var fields={};
+  var paramMap={
+    'first_name':'firstName','last_name':'lastName','full_name':'fullName',
+    'email':'email','phone':'phone','company':'company',
+    'city':'city','state':'state','country':'country'
+  };
+  var skipTags={'SCRIPT':1,'STYLE':1,'NOSCRIPT':1,'TEXTAREA':1,'CODE':1,'PRE':1};
+  var hasUrlFields=false;
+  for(var p in paramMap){
+    var v=params.get(p);
+    if(v){fields[paramMap[p]]=v;hasUrlFields=true;}
+  }
+  var contactId=params.get('contact_id');
+  function esc(s){
+    if(!s)return s;
+    var d=document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+  function doReplace(data){
+    var r={};
+    r['{{full_name}}']=esc(((data.firstName||'')+' '+(data.lastName||'')).trim()||((data.fullName||data.name)||''));
+    r['{{first_name}}']=esc(data.firstName||(data.name?data.name.split(' ')[0]:'')||'');
+    r['{{last_name}}']=esc(data.lastName||(data.name&&data.name.indexOf(' ')>-1?data.name.substring(data.name.indexOf(' ')+1):'')||'');
+    r['{{email}}']=esc(data.email||'');
+    r['{{phone}}']=esc(data.phone||'');
+    r['{{company}}']=esc(data.company||'');
+    r['{{city}}']=esc(data.city||'');
+    r['{{state}}']=esc(data.state||'');
+    r['{{country}}']=esc(data.country||'');
+    r['{{date}}']=new Date().toLocaleDateString();
+    r['{{time}}']=new Date().toLocaleTimeString();
+    r['{{location}}']=[data.city,data.state,data.country].filter(Boolean).join(', ');
+    r['{{tracking_id}}']=esc(data.trackingId||'');
+    r['{{lastClickedProduct}}']=esc(data.lastClickedProduct||'');
+    r['{{lastProductClickDate}}']=esc(data.lastProductClickDate||'');
+    r['{{lastClickedProductPrice}}']=esc(data.lastClickedProductPrice||'');
+    r['{{lastClickedProductURL}}']=esc(data.lastClickedProductURL||'');
+    r['{{productsClickedCount}}']=esc(data.productsClickedCount||'0');
+    r['{{ip_address}}']=esc(data.ipAddress||'');
+    r['{{ip}}']=esc(data.ipAddress||'');
+    if(data.customFields){
+      for(var k in data.customFields){
+        r['{{'+k+'}}']=esc(String(data.customFields[k]||''));
+      }
+    }
+    params.forEach(function(v,k){
+      if(!paramMap[k]&&k!=='contact_id'&&k!=='page_id'&&k.indexOf('utm_')!==0){
+        r['{{'+k+'}}']=esc(v);
+      }
+    });
+    var hasValues=false;
+    for(var key in r){if(r[key]){hasValues=true;break;}}
+    if(!hasValues)return;
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
+      acceptNode:function(n){
+        var p=n.parentNode;
+        if(p&&skipTags[p.nodeName])return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node;
+    while(node=walker.nextNode()){
+      var txt=node.nodeValue;
+      if(txt&&txt.indexOf('{{')>-1){
+        var changed=txt;
+        for(var ph in r){
+          if(r[ph]&&changed.indexOf(ph)>-1){
+            changed=changed.split(ph).join(r[ph]);
+          }
+        }
+        if(changed!==txt)node.nodeValue=changed;
+      }
+    }
+    var attrs=['value','placeholder','content','alt','title'];
+    attrs.forEach(function(attr){
+      var els=document.querySelectorAll('['+attr+'*="{{"]');
+      for(var i=0;i<els.length;i++){
+        var tag=els[i].tagName;
+        if(skipTags[tag])continue;
+        var val=els[i].getAttribute(attr);
+        if(val){
+          var nv=val;
+          for(var ph in r){
+            if(r[ph]&&nv.indexOf(ph)>-1){
+              nv=nv.split(ph).join(r[ph]);
+            }
+          }
+          if(nv!==val)els[i].setAttribute(attr,nv);
+        }
+      }
+    });
+  }
+  function run(){
+    if(contactId){
+      var xhr=new XMLHttpRequest();
+      xhr.open('GET','https://app.aonitek.com/api/landing/context/'+encodeURIComponent(contactId)+'?page_id=2127');
+      xhr.onload=function(){
+        if(xhr.status===200){
+          try{
+            var resp=JSON.parse(xhr.responseText);
+            if(resp.success&&resp.contact){
+              var merged=resp.contact;
+              for(var k in fields){merged[k]=fields[k];}
+              doReplace(merged);
+              return;
+            }
+          }catch(e){}
+        }
+        if(hasUrlFields)doReplace(fields);
+      };
+      xhr.onerror=function(){if(hasUrlFields)doReplace(fields);};
+      xhr.send();
+    }else if(hasUrlFields){
+      doReplace(fields);
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',run);}
+  else{run();}
+})();
+</script>
+<script data-payment>
+(function(){
+  var slug='eh5Sb9v';
+  var apiBase='https://app.aonitek.com';
+  function findEmail(){
+    var ids=['email','emailAddress','buyer-email','buyerEmail','user-email','userEmail','checkout-email','customer-email','contact-email'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value&&el.value.includes('@'))return el.value.trim();}
+    var inputs=document.querySelectorAll('input[type="email"],input[name*="email"],input[placeholder*="email"],input[placeholder*="Email"]');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value&&inputs[j].value.includes('@'))return inputs[j].value.trim();}
+    return '';
+  }
+  function findName(){
+    var ids=['name','fullName','full-name','buyer-name','buyerName','customer-name','userName','user-name'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value)return el.value.trim();}
+    var inputs=document.querySelectorAll('input[name*="name"]:not([name*="email"]):not([type="email"]),input[placeholder*="name"]:not([placeholder*="email"]):not([type="email"]),input[placeholder*="Name"]:not([type="email"])');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value)return inputs[j].value.trim();}
+    return '';
+  }
+  var __realProcessPayment=function(a,b,c,d,e){
+    var amountCents,email,productName,productDescription,customerName,quantity;
+    if(a&&typeof a==='object'){
+      amountCents=a.amountCents;email=a.email;productName=a.productName;
+      productDescription=a.productDescription||'';customerName=a.name||'';quantity=a.quantity||1;
+    }else{
+      amountCents=typeof a==='number'?a:0;productName=typeof b==='string'?b:'';
+      productDescription=typeof c==='string'?c:'';email='';customerName='';quantity=1;
+    }
+    if(!email)email=findEmail();
+    if(!customerName)customerName=findName();
+    if(!productName){alert('Product name is required.');return Promise.reject('no_product_name');}
+    if(!amountCents||amountCents<100){alert('Amount must be at least $1.00');return Promise.reject('invalid_amount');}
+    if(!email){alert('Please enter your email address.');return Promise.reject('no_email');}
+    var successBase=window.location.href.split('?')[0];
+    return fetch(apiBase+'/api/landing-pages/public/'+slug+'/payment/checkout',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,name:customerName,amountCents:amountCents,productName:productName,productDescription:productDescription,quantity:quantity,successUrl:successBase+'?payment=success&product='+encodeURIComponent(productName)+'&session_id={CHECKOUT_SESSION_ID}',cancelUrl:successBase+'?payment=cancelled'})
+    }).then(function(r){return r.json();}).then(function(d){
+      if(d.checkoutUrl){window.location.href=d.checkoutUrl;}
+      else{alert(d.error||'Failed to process payment');throw new Error(d.error);}
+    });
+  };
+  Object.defineProperty(window,'__processPayment',{value:__realProcessPayment,writable:false,configurable:false});
+  document.addEventListener('DOMContentLoaded',function(){
+    var urlParams=new URLSearchParams(window.location.search);
+    if(urlParams.get('payment')==='success'){
+      var pName=urlParams.get('product')||'your item';
+      var overlay=document.createElement('div');overlay.id='payment-success-overlay';
+      overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:999999;font-family:system-ui,-apple-system,sans-serif;';
+      overlay.innerHTML='<div style="background:white;border-radius:16px;padding:40px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.15);"><div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><h2 style="margin:0 0 12px;font-size:24px;font-weight:700;color:#111827;">Payment Successful!</h2><p style="margin:0 0 24px;color:#6b7280;font-size:16px;">Thank you for purchasing '+pName.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'.</p><button onclick="document.getElementById(\'payment-success-overlay\').remove();window.history.replaceState({},\'\',window.location.pathname);" style="padding:12px 32px;font-size:16px;font-weight:600;background:#16a34a;color:white;border:none;border-radius:8px;cursor:pointer;">Continue</button></div>';
+      document.body.appendChild(overlay);
+    }
+  });
+})();
+</script></head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
+
+    <!-- Header -->
+    <nav class="flex items-center justify-between px-8 py-6 bg-white shadow-sm sticky top-0 z-50">
+        <div class="text-2xl font-bold text-medical-600">MedComm<span class="text-slate-400">Pro</span></div>
+        <div class="hidden md:flex gap-8 font-medium">
+            <a href="#metodologia" class="hover:text-medical-600 transition">Metodología</a>
+            <a href="#widgets" class="hover:text-medical-600 transition">Simuladores</a>
+            <a href="#planes" class="hover:text-medical-600 transition">Planes</a>
+        </div>
+        <div class="flex gap-4">
+            <a href="#contacto" class="border border-medical-600 text-medical-600 px-6 py-2 rounded-full font-semibold hover:bg-medical-50 transition">Solicitar Demo</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="py-20 px-8 text-center bg-white">
+        <h1 class="text-5xl md:text-6xl font-extrabold text-slate-900 mb-6 tracking-tight">Comunica con claridad, compasión y ética ante novedades difíciles.</h1>
+        <p class="text-xl text-slate-600 max-w-3xl mx-auto mb-10">Dos widgets interactivos para familiares y pacientes. Práctica intensiva, feedback de mentores en tiempo real y resultados medibles para médicos en formación.</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="#contacto" class="bg-medical-600 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-900 transition">Solicitar Demo</a>
+            <a href="#widgets" class="bg-medical-400 text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-blue-300 transition">Ver demostraciones</a>
+        </div>
+    </header>
+
+    <!-- Propuesta de Valor -->
+    <section class="py-20 bg-slate-900 text-white px-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">Resultados para Instituciones</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-6 border border-slate-700 rounded-xl">
+                    <h3 class="font-bold text-medical-400 mb-2">Relación Médico-Paciente</h3>
+                    <p class="text-sm">Fortalecimiento del vínculo, reducción de quejas y mejora en la percepción de calidad del servicio.</p>
+                </div>
+                <div class="p-6 border border-slate-700 rounded-xl">
+                    <h3 class="font-bold text-medical-400 mb-2">Métricas de Progreso</h3>
+                    <p class="text-sm">Dashboards detallados con indicadores de desempeño, comprensión y niveles de empatía del personal.</p>
+                </div>
+                <div class="p-6 border border-slate-700 rounded-xl">
+                    <h3 class="font-bold text-medical-400 mb-2">Integración Total</h3>
+                    <p class="text-sm">Compatibilidad nativa con sistemas LMS/CRM y certificación automática al completar el programa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Widgets -->
+    <section id="widgets" class="py-20 px-8 max-w-6xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-16">Simuladores de Entrenamiento</h2>
+        <div class="grid md:grid-cols-2 gap-12">
+            <!-- Widget Familiares -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h3 class="text-2xl font-bold mb-4 text-medical-600">Widget Familiares: conversaciones que acompañan</h3>
+                <p class="text-slate-600 mb-6">Enfoque: Notificación de diagnóstico, explicación de pronóstico y manejo de crisis emocional.</p>
+                <ul class="space-y-2 mb-8 text-sm text-slate-500">
+                    <li>✓ Simulaciones de perfiles diversos</li>
+                    <li>✓ Guiones y plantillas de lenguaje claro</li>
+                    <li>✓ Feedback de IA en tiempo real</li>
+                </ul>
+            </div>
+            <!-- Widget Pacientes -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200">
+                <h3 class="text-2xl font-bold mb-4 text-medical-600">Widget Pacientes: claridad que inspira confianza</h3>
+                <p class="text-slate-600 mb-6">Enfoque: Consentimiento informado, resolución de dudas complejas y acompañamiento en el plan de manejo.</p>
+                <ul class="space-y-2 mb-8 text-sm text-slate-500">
+                    <li>✓ Análisis de sesgos y claridad verbal</li>
+                    <li>✓ Estadísticas de satisfacción del paciente</li>
+                    <li>✓ Casos de estudio interactivos</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programa y Seguridad -->
+    <section class="py-20 bg-slate-100 px-8">
+        <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12">
+            <div>
+                <h2 class="text-2xl font-bold mb-6">Contenido del Programa</h2>
+                <ul class="space-y-3 text-slate-700">
+                    <li>• Manejo de emociones y empatía</li>
+                    <li>• Ética y diversidad cultural</li>
+                    <li>• Comunicación no verbal</li>
+                    <li>• Evaluación y certificación de competencias</li>
+                </ul>
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold mb-6">Seguridad y Cumplimiento</h2>
+                <p class="text-slate-700">Toda la información tratada utiliza datos simulados. Garantizamos anonimización total y cumplimiento estricto con normativas de protección de datos regionales.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-white text-center border-t border-slate-200">
+        <p class="text-slate-500">&copy; 2024 MedComm Pro. Solución certificada para instituciones de salud.</p>
+    </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
